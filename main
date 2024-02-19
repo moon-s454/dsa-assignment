@@ -1,0 +1,72 @@
+import java.util.*;
+
+class Student {
+    String name;
+    int marks;
+
+    public Student(String name, int marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+}
+
+class Stack {
+    private LinkedList<Student> students = new LinkedList<>();
+
+    public void push(Student student) {
+        students.push(student);
+    }
+
+    public Student pop() {
+        return students.pop();
+    }
+
+    public void displayAll() {
+        for (Student student : students) {
+            System.out.println("Name: " + student.name + ", Marks: " + student.marks);
+        }
+    }
+
+    public void displayTop3() {
+        students.sort((s1, s2) -> s2.marks - s1.marks);
+        for (int i = 0; i < 3 && i < students.size(); i++) {
+            System.out.println((i + 1) + ". " + students.get(i).name + ", Marks: " + students.get(i).marks);
+        }
+    }
+}
+
+public class main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Stack stack = new Stack();
+
+        while (true) {
+            System.out.println("1. Add a student\n2. Remove a student\n3. Display all students\n4. Display top 3 students\n5. Exit");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter student name:");
+                    String name = scanner.nextLine();
+                    System.out.println("Enter student marks:");
+                    int marks = scanner.nextInt();
+                    scanner.nextLine();
+                    stack.push(new Student(name, marks));
+                    break;
+                case 2:
+                    Student removedStudent = stack.pop();
+                    System.out.println("Removed student: " + removedStudent.name);
+                    break;
+                case 3:
+                    stack.displayAll();
+                    break;
+                case 4:
+                    stack.displayTop3();
+                    break;
+                default:
+                    System.exit(0);
+            }
+        }
+    }
+}
